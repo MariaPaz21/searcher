@@ -1,17 +1,17 @@
 let loadProductJSON = () => {
     let myURL = 'https://raw.githubusercontent.com/Bootcamp-Espol/Datos/main/products.json';
-  
+
     fetch(myURL)
-      .then(response => response.json())
-      .then(result => {
-        let resultHTML = document.getElementById("templateproducts");
-        resultHTML.innerHTML = ''; 
-  
-        for (let index = 0; index < result.length; index++) {
-          const element = result[index];
-          let { name, type, price, src } = element;
-  
-          let template = `
+        .then(response => response.json())
+        .then(result => {
+            let resultHTML = document.getElementById("templateproducts");
+            resultHTML.innerHTML = '';
+
+            for (let index = 0; index < result.length; index++) {
+                const element = result[index];
+                let { name, type, price, src } = element;
+
+                let template = `
             <div class="col-xl-3 col-md-6 mb-xl-0 mb-4 mt-4 card-blog" style="display: flex;">
               <div class="card card-plain">
                 <div class="card-header p-0 mt-n4 mx-3">
@@ -30,40 +30,39 @@ let loadProductJSON = () => {
                 </div>
               </div>
             </div>`;
-  
-          resultHTML.innerHTML += template;
-        }
-        let filterbtn = document.getElementById('filter');
-       filterbtn.addEventListener('click', elementoSearch);
-  
-  
-        let text = document.getElementById('text');
-       text.addEventListener('keydown', function(event) {
-          if (event.keyCode === 13){
-            elementoSearch();
-          }
-        });
-  
-        function elementoSearch() {
-          let text = document.getElementById('text').value.toLowerCase();
-          let cards = document.querySelectorAll('.card-blog');
-          console.log(text)
-          cards.forEach(card => {
-            let name = card.querySelector('h5').textContent.toLowerCase(); 
-            let type = card.querySelector('.text-sm').textContent.toLowerCase();
-  
-            if (name.includes(text) || type.includes(text)) {
-              card.style.display = 'flex';
-            } else {
-              card.style.display = 'none';
+
+                resultHTML.innerHTML += template;
             }
-          });
-        }
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  }
-  
-  loadProductJSON();
-  
+            let filterbtn = document.getElementById('filter');
+            filterbtn.addEventListener('click', elementoSearch);
+
+
+            let text = document.getElementById('text');
+            text.addEventListener('keydown', function (event) {
+                if (event.keyCode === 13) {
+                    elementoSearch();
+                }
+            });
+
+            function elementoSearch() {
+                let text = document.getElementById('text').value.toLowerCase();
+                let cards = document.querySelectorAll('.card-blog');
+                console.log(text)
+                cards.forEach(card => {
+                    let name = card.querySelector('h5').textContent.toLowerCase();
+                    let type = card.querySelector('.text-sm').textContent.toLowerCase();
+
+                    if (name.includes(text) || type.includes(text)) {
+                        card.style.display = 'flex';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            }
+        })
+        .catch(error => {
+            console.log(error);
+        });
+}
+
+loadProductJSON();
